@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Contact</title>
+</head>
+<body>
+    <h1>Delete Contact</h1>
+    <p>Are you sure you want to delete {{ contact.name }}?</p>
+    <form method="post" hx-delete="{% url 'contact_delete' contact.pk %}" hx-target="#contacts" hx-swap="outerHTML">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+    <button hx-get="{% url 'contact_list' %}" hx-target="#contacts">Cancel</button>
+</body>
+</html>
