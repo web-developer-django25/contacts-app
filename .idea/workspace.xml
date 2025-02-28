@@ -5,29 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c185cbb-6e4b-4deb-b187-de57130d869f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/ContactsAppProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/api_urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/migrations/0001_initial.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/static/css/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/templates/ContactsApp/base.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/templates/ContactsApp/contact_confirm_delete.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/templates/ContactsApp/contact_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/templates/ContactsApp/contact_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/templates/ContactsApp/contact_list_partial.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ContactsApp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,9 +37,9 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2tV539riW1r4fEKLz2rcUONewDb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -74,6 +52,7 @@
     "Django Server.ContactsAppProject.executor": "Run",
     "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "htmx.bundled.context.provider.enabled": "true",
     "list.type.of.created.stylesheet": "CSS",
@@ -129,7 +108,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740424201303</updated>
-      <workItem from="1740424201813" duration="43611000" />
+      <workItem from="1740424201813" duration="45708000" />
+      <workItem from="1740772984395" duration="369000" />
+      <workItem from="1740773710820" duration="269000" />
     </task>
     <servers />
   </component>
