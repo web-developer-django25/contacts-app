@@ -7,22 +7,27 @@ A modern web application for managing contacts built with Django, HTMX, and Tail
 - 📱 Responsive, modern UI using Tailwind CSS
 - ⚡ Real-time search with HTMX
 - ✨ Full CRUD operations for contacts
+- 🗂️ Contact categories for better organization
 - 📝 Contact information includes:
   - Name
   - Email
   - Phone number
   - Address
   - Notes
+  - Category
 - 🔄 Automatic timestamps for creation and updates
-- 📊 Paginated contact list
+- 📊 Paginated contact list (10 contacts per page)
 - 🎯 Success messages for all operations
-- 🔍 Instant search functionality
+- 🔍 Instant search across all contact fields:
+  - Name
+  - Email
+  - Phone number
+  - Address
 - 🎨 Clean and intuitive interface
 
 ## Technology Stack
 
 - **Backend**: Django 5.1.6
-- **API**: Django REST Framework
 - **Frontend**: 
   - HTMX for dynamic interactions
   - Tailwind CSS for styling
@@ -55,12 +60,7 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-5. Create a superuser (optional):
-```bash
-python manage.py createsuperuser
-```
-
-6. Run the development server:
+5. Run the development server:
 ```bash
 python manage.py runserver
 ```
@@ -69,21 +69,34 @@ The application will be available at http://127.0.0.1:8000/
 
 ## Usage
 
+### Managing Contacts
 - Visit the homepage to see your contacts list
 - Use the "Add Contact" button to create new contacts
 - Click on a contact to view details
-- Use the search bar to filter contacts in real-time
-- Edit or delete contacts using the respective buttons
-- Access the admin interface at /admin (requires superuser credentials)
+- Use the edit or delete buttons to modify contacts
+
+### Categories
+- Create categories to organize your contacts
+- Assign contacts to categories during creation or editing
+- Filter contacts by category
+
+### Search
+- Use the search bar to instantly filter contacts
+- Search works across all contact fields:
+  - Name
+  - Email
+  - Phone number
+  - Address
+- Results update in real-time as you type
 
 ## Project Structure
 
 ```
 contacts_app/
 ├── contacts/                 # Main application
-│   ├── models.py            # Contact model
+│   ├── models.py            # Contact and Category models
 │   ├── views.py             # Views and HTMX handlers
-│   ├── forms.py             # Contact form
+│   ├── forms.py             # Contact and Category forms
 │   ├── urls.py              # URL routing
 │   └── templates/           # HTML templates
 ├── static/                  # Static files
@@ -94,7 +107,7 @@ contacts_app/
 
 ## API Endpoints
 
-The application includes a REST API powered by Django REST Framework:
+The application includes a REST API:
 
 - `GET /api/contacts/` - List all contacts
 - `POST /api/contacts/` - Create a new contact

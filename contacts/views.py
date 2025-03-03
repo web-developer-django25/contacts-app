@@ -4,8 +4,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.contrib import messages
-from .models import Contact
-from .forms import ContactForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from .models import Contact, Category
+from .forms import ContactForm, CategoryForm
 
 # Create your views here.
 def contact_list(request):
@@ -44,6 +47,11 @@ class ContactListView(ListView):
     template_name = 'contacts/contact_list.html'
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
 class ContactDetailView(DetailView):
     model = Contact
     context_object_name = 'contact'
@@ -73,10 +81,29 @@ class ContactDeleteView(SuccessMessageMixin, DeleteView):
         messages.success(self.request, self.success_message)
         return super().delete(request, *args, **kwargs)
 
-# HTMX Views
+class CategoryCreateView(SuccessMessageMixin, CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'contacts/category_form.html'
+    success_url = reverse_lazy('contacts:contact_list')
+    success_message = "Category was created successfully!"
+
 def contact_search(request):
     query = request.GET.get('q', '')
-    contacts = Contact.objects.filter(name__icontains=query)
-    context = {'contacts': contacts}
+    if query:
+        contacts = Contact.objects.filter(
+            Q(name__icontains=query) |
+            Q(email__icontains=query) |
+            Q(phone_number__icontains=query) |
+            Q(address__icontains=query)
+        ).order_by('name')
+    else:
+        contacts = Contact.objects.all().order_by('name')
+    
+    context = {
+        'contacts': contacts,
+        'query': query,
+        'categories': Category.objects.all()
+    }
     return render(request, 'contacts/partials/contact_list_partial.html', context)
 

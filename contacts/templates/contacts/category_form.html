@@ -1,0 +1,39 @@
+{% extends 'contacts_app/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Edit{% else %}New{% endif %} Category{% endblock %}
+
+{% block content %}
+<div class="max-w-lg mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
+    <h1 class="text-3xl font-medium">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Category</h1>
+    <p class="text-slate-500">Fill in the details to {% if form.instance.pk %}update{% else %}create{% endif %} your category</p>
+
+    <form method="post" class="my-10">
+        {% csrf_token %}
+        <div class="flex flex-col space-y-5">
+            {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-red-500 text-sm mt-1">
+                    {{ field.errors }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                class="w-full py-3 font-medium text-white bg-blue-600 hover:bg-blue-500 rounded-lg border-blue-500 hover:shadow inline-flex space-x-2 items-center justify-center">
+                <span>{% if form.instance.pk %}Update{% else %}Create{% endif %} Category</span>
+            </button>
+
+            <a href="{% url 'contacts:contact_list' %}"
+                class="w-full py-3 font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg border-gray-200 hover:shadow inline-flex space-x-2 items-center justify-center">
+                <span>Cancel</span>
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %} 
