@@ -92,18 +92,59 @@ The application will be available at http://127.0.0.1:8000/
 ## Project Structure
 
 ```
-contacts_app/
-├── contacts/                 # Main application
-│   ├── models.py            # Contact and Category models
-│   ├── views.py             # Views and HTMX handlers
-│   ├── forms.py             # Contact and Category forms
-│   ├── urls.py              # URL routing
-│   └── templates/           # HTML templates
-├── static/                  # Static files
-│   ├── css/                # Custom CSS
-│   └── img/                # Images
-└── templates/              # Base templates
+contacts_app/              # Main project directory
+├── contacts/             # Main application
+│   ├── migrations/      # Database migrations
+│   ├── templates/      # Application templates
+│   │   ├── contacts/  # Contact-related templates
+│   │   └── registration/ # Authentication templates
+│   ├── admin.py       # Admin interface configuration
+│   ├── apps.py        # Application configuration
+│   ├── forms.py       # Form definitions
+│   ├── models.py      # Database models
+│   ├── tests.py       # Unit tests
+│   ├── urls.py        # URL routing
+│   └── views.py       # View logic
+├── contacts_app/        # Project configuration
+│   ├── static/        # Project-wide static files
+│   │   ├── css/      # CSS files
+│   │   └── img/      # Images
+│   ├── templates/    # Project-wide templates
+│   ├── settings.py   # Project settings
+│   ├── urls.py       # Project URL configuration
+│   ├── wsgi.py      # WSGI configuration
+│   └── asgi.py      # ASGI configuration
+├── staticfiles/        # Collected static files
+├── .gitignore         # Git ignore rules
+├── app.yaml           # Google Cloud App Engine configuration
+├── manage.py          # Django management script
+├── requirements.txt   # Project dependencies
+└── README.md         # Project documentation
 ```
+
+### Key Components
+
+1. **Application Layer (`contacts/`)**
+   - Models: Database schema definitions
+   - Views: Business logic and request handling
+   - Templates: HTML templates with Tailwind CSS
+   - Forms: Form definitions and validation
+   - URLs: URL routing for the application
+
+2. **Project Configuration (`contacts_app/`)**
+   - Settings: Project-wide settings and configurations
+   - Static Files: CSS, JavaScript, and images
+   - Base Templates: Base HTML templates
+   - URL Configuration: Root URL routing
+
+3. **Deployment Configuration**
+   - `app.yaml`: Google Cloud App Engine settings
+   - `requirements.txt`: Python package dependencies
+   - `.gitignore`: Source control exclusions
+
+4. **Static Files**
+   - Development: Served from `contacts_app/static/`
+   - Production: Collected to `staticfiles/` and served from Google Cloud Storage
 
 ## API Endpoints
 
