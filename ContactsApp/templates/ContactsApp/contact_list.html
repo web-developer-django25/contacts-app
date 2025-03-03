@@ -1,0 +1,19 @@
+{% extends 'ContactsApp/base.html' %}
+
+{% block content %}
+    <h1>Contacts</h1>
+
+    <input type="text"
+           name="search"
+           placeholder="Search contacts..."
+           hx-get="{% url 'contact_search' %}"
+           hx-target="#contact-list"
+           hx-swap="outerHTML"
+           hx-trigger="keyup changed delay:500ms">
+
+    <div id="contact-list">
+        {% include 'ContactsApp/contact_list_partial.html' %}
+    </div>
+
+    <a href="{% url 'contact_create' %}">Add New Contact</a>
+{% endblock %}

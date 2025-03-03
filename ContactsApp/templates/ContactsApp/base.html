@@ -1,0 +1,16 @@
+{% load static %}  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts Web Application</title>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Contacts App</h1>
+    </header>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
