@@ -117,29 +117,167 @@ The application includes a REST API:
 
 ## Deployment
 
-This application can be deployed to any platform that supports Django. Some recommended options:
+This application is configured for deployment on Google Cloud Platform (App Engine) with PostgreSQL and Cloud Storage. Here's how to deploy:
 
-- Heroku
-- DigitalOcean
-- AWS Elastic Beanstalk
-- Python Anywhere
+### Prerequisites
+
+1. Install the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+2. Have a Google Cloud account with billing enabled
+3. Create a new project or select an existing one
+
+### Setting up Google Cloud Resources
+
+1. Create a Cloud SQL instance:
+```bash
+# Enable Cloud SQL Admin API
+gcloud services enable sqladmin.googleapis.com
+
+# Create a PostgreSQL instance
+gcloud sql instances create contacts-db \
+    --database-version=POSTGRES_13 \
+    --tier=db-f1-micro \
+    --region=us-central1
+
+# Create a database
+gcloud sql databases create contacts_db --instance=contacts-db
+
+# Create a user
+gcloud sql users create contacts_user \
+    --instance=contacts-db \
+    --password=YOUR_PASSWORD
+```
+
+2. Create a Cloud Storage bucket:
+```bash
+# Create a bucket for static files
+gcloud storage buckets create gs://YOUR_BUCKET_NAME \
+    --location=us-central1 \
+    --uniform-bucket-level-access
+
+# Set bucket permissions
+gsutil iam ch allUsers:objectViewer gs://YOUR_BUCKET_NAME
+```
+
+3. Set up Secret Manager:
+```bash
+# Enable Secret Manager API
+gcloud services enable secretmanager.googleapis.com
+
+# Create a secret for Django
+echo "your-secret-key" | \
+gcloud secrets create django_secret \
+    --data-file=- \
+    --replication-policy="automatic"
+```
+
+### Configuration
+
+1. Set environment variables in app.yaml:
+```yaml
+env_variables:
+  DJANGO_SETTINGS_MODULE: "contacts_app.settings"
+  DEBUG: "False"
+  DB_NAME: "contacts_db"
+  DB_USER: "contacts_user"
+  DB_PASSWORD: "YOUR_PASSWORD"
+  DB_HOST: "/cloudsql/YOUR_INSTANCE_CONNECTION_NAME"
+  GS_BUCKET_NAME: "YOUR_BUCKET_NAME"
+```
+
+2. Update database connection:
+```bash
+# Get your instance connection name
+gcloud sql instances describe contacts-db --format='value(connectionName)'
+```
 
 ### Deployment Steps
 
-1. Update `settings.py` for production:
-   - Set `DEBUG = False`
-   - Update `ALLOWED_HOSTS`
-   - Configure your production database
-   - Set up static files hosting
-
-2. Install production dependencies:
+1. Collect static files:
 ```bash
-pip install gunicorn psycopg2-binary
+python manage.py collectstatic
 ```
 
-3. Configure your web server (e.g., Nginx)
+2. Create and apply migrations:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
 
-4. Set up SSL certificate
+3. Deploy to App Engine:
+```bash
+gcloud app deploy app.yaml
+```
+
+4. View your application:
+```bash
+gcloud app browse
+```
+
+### Local Development
+
+1. Clone the repository:
+```bash
+git clone https://github.com/web-developer-django25/contacts-app.git
+cd contacts-app
+```
+
+2. Create and activate virtual environment:
+```bash
+python -m venv venv
+# On Windows
+venv\Scripts\activate
+# On macOS/Linux
+source venv/bin/activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Set up environment variables:
+```bash
+# Create .env file
+echo "DEBUG=True" > .env
+echo "SECRET_KEY=your-secret-key" >> .env
+```
+
+5. Run migrations:
+```bash
+python manage.py migrate
+```
+
+6. Start development server:
+```bash
+python manage.py runserver
+```
+
+The application will be available at http://127.0.0.1:8000/
+
+### Production Considerations
+
+1. Security:
+   - SSL is enforced
+   - HSTS is enabled
+   - XSS protection is active
+   - Content type sniffing prevention is enabled
+   - Clickjacking protection is active
+
+2. Performance:
+   - Static files are served from Google Cloud Storage
+   - WhiteNoise middleware is configured for efficient static file serving
+   - Database connections are optimized for Cloud SQL
+
+3. Monitoring:
+   - Use Google Cloud Monitoring for application metrics
+   - Set up logging with Cloud Logging
+   - Configure alerts for critical errors
+
+4. Maintenance:
+   - Regularly update dependencies
+   - Monitor database performance
+   - Back up data periodically
+   - Review security settings
 
 ## Contributing
 
