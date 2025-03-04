@@ -1,0 +1,50 @@
+{% extends 'contacts_app/base.html' %}
+
+{% block title %}Contacts List{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <!-- Search Bar -->
+    <div class="mb-6">
+        <input type="search" 
+               name="q" 
+               placeholder="Search contacts by name, email, phone, or address..." 
+               class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+               hx-get="{% url 'contacts:contact_search' %}"
+               hx-trigger="keyup changed delay:500ms"
+               hx-target="#contacts-list"
+               hx-indicator=".htmx-indicator">
+        <div class="htmx-indicator flex justify-center mt-4">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+        </div>
+    </div>
+
+    <!-- Contacts List -->
+    <div id="contacts-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% include 'contacts/partials/contact_list_partial.html' %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <div class="mt-6 flex justify-center">
+        <nav class="inline-flex rounded-md shadow">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Previous
+            </a>
+            {% endif %}
+
+            <span class="px-3 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                Next
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
